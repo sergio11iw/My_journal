@@ -1,19 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Мой дневник</title>
-</head>
-<body>
-<h1>Мой дневник</h1>
-<style>
-   h1 {
-   border-bottom: 2px solid black;
-   padding-bottom: 5px;
-   }
-</style>
-{% for note in notes%}
-<p><h3>{{ note.id }} - <mark>{{ note.mark }}</mark></h3></p>
-{% endfor %}
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<header>
+    <h1><a style="text-decoration:none; color: white; border-bottom: 4px solid white;" href="/">Мой журнал &#9997;</a></h1>
+</header>
+<main>
+    <div id="tasks">
+        {% for note in notes%}
+        <li type="1"><span class="task-title">{{ note.mark }} </span></li>
+
+        {% endfor %}
+    </div>
+    <div id="inp">
+    <form  method="post" action="{% url 'main' %}">
+        {% csrf_token %}
+        <label for="mark">Событие</label><br>
+        <input id='mark' name="mark" type="text"><br>
+        <input id='next' type="submit" value="добавить событие">
+    </form>
+        </div>
+</main>
+{% endblock %}

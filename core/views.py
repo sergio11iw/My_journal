@@ -4,9 +4,12 @@ from .models import Note
 
 
 
-
 def main(request):
     notes = Note.objects.all()
+    if request.method == 'POST':
+        text_data = request.POST['mark']
+        if text_data:
+            Note.objects.create(mark=text_data)
     return render(request, 'main.html', {'notes': notes})
 
 def about(request):

@@ -4,6 +4,7 @@ class Note(models.Model):
     mark = models.CharField(max_length=100, verbose_name='Отметить')
 
 
+
     class Meta:
         verbose_name = 'Наблюдение'
         verbose_name_plural = 'Наблюдения'
