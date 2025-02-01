@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<header>
+    <h1><a style="text-decoration:none; color: white; border-bottom: 4px solid white;" href="/">Мой журнал &#9997;</a>
+    </h1>
+</header>
+
+<main>
+    <h5>Категории:
+        {% for category in categories %}
+        <a {% if category.id == active_category.id %} class="active-link" {% else %} class="noactive-link"  {% endif %} href="?category={{ category.id }}">{{ category.title }} ({{ category.total_notes }})</a>
+        {% endfor %}</h5>
+    <div id="tasks">
+        {% for note in notes%}
+        <li type="1"><span class="task-title"><a href="{% url 'note_detail' note.id %}">{{ note.mark }}</a></span><br>
+            <div id="cat">Категория: {{ note.category }}</div>
+        </li>
+        {% endfor %}
+        <li style="list-style: none">
+            <form style="" method="post" action="{% url 'main' %}">
+                <h4 style="margin-top: 0px">Добавить запись</h4>
+                {% csrf_token %}
+                {{ note_form|crispy }}
+                <button type="button" class="btn btn-info">Добавить</button>
+            </form>
+        </li>
+    </div>
+    <div style=" height: 50px"></div>
+</main>
+{% endblock %}
