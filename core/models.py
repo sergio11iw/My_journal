@@ -14,7 +14,6 @@ class Note(models.Model):
     category = models.ForeignKey(NoteCategory, blank=True, null=True, on_delete=models.SET_NULL,
                                  verbose_name='Категория')
 
-
     class Meta:
         verbose_name = 'Наблюдение'
         verbose_name_plural = 'Наблюдения'

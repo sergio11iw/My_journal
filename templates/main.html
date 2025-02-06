@@ -18,11 +18,11 @@
         </li>
         {% endfor %}
         <li style="list-style: none">
-            <form style="" method="post" action="{% url 'main' %}">
-                <h4 style="margin-top: 0px">Добавить запись</h4>
+            <h4 style="margin-top: 0px">Добавить запись</h4>
+            <form method="POST" action="{% url 'main' %}">
                 {% csrf_token %}
-                {{ note_form|crispy }}
-                <button type="button" class="btn btn-info">Добавить</button>
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-info">Добавить</button>
             </form>
         </li>
     </div>
