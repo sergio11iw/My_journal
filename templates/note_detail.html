@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<main>
+    <div id="tasks">
+        <li style="list-style: none"><span class="task-title"><h3>{{ note.mark }}</h3><h5>{{ note.created_date }}<br>{{ category.title }}</h5></span></li>
+
+    </div>
+
+</main>
+{% endblock %}

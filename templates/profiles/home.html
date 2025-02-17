@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<main>
+    <div>
+        {% if request.user.is_authenticated %}
+        <h2>Личный кабинет</h2>
+        <p>{{ request.user.username }}</p>
+        <p> {{ request.user.profile.bio }}</p>
+        {% else %}
+        <p>Вам нам нужно авторизоваться или зарегистрироваться</p>
+        {% endif %}
+    </div>
+    <div style=" height: 50px"></div>
+</main>
+{% endblock %}
