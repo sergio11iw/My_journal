@@ -9,3 +9,4 @@ class NoteAddModelForm(forms.ModelForm):
     class Meta:
         model = Note
         fields = '__all__'
+        exclude = ['profile']
