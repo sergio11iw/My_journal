@@ -6,11 +6,11 @@
 <main>
     {% if request.user.is_authenticated %}
     <h5>Количество моих записей: {{ notes_count }}</h5>
-    <h5>Категории:
-        {% for category in categories %}
-        <a {% if category.id == active_category.id %} class="active-link" {% else %} class="noactive-link" {% endif %} href="?category={{ category.id }}">{{ category.title}}
-                </a>
-        {% endfor %}</h5>
+    <h3>Фильтр</h3>
+        <form>
+            {{note_filter_form|crispy}}
+            <button class="btn btn-outline-info" type="submit" style="margin-bottom: 15px">Фильтровать</button>
+        </form>
     <div id="tasks">
         {% for note in notes%}
         <li type="1"><span class="task-title"><a href="{% url 'note_detail' note.id %}">{{ note.mark }}</a></span><br>

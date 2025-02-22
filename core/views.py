@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect,  get_object_or_404
-from django.db.models import Count
+from django.db.models import Count, Q
 from .models import Note, NoteCategory
-from .forms import NoteAddForm, NoteAddModelForm
+from .forms import NoteAddForm, NoteAddModelForm, NoteFilterForm
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
@@ -9,12 +9,19 @@ from django.http import Http404
 def main(request):
     profile = request.user.profile
     notes = Note.objects.filter(profile=profile)
-    category = request.GET.get('category')
+
     active_category = None
     notes_count = notes.count()
-    if category:
-        notes = notes .filter(category__id=category)
-        active_category = NoteCategory.objects.get(id=category)
+    note_filter_form = NoteFilterForm(request.GET)
+    if note_filter_form.is_valid():
+        category = note_filter_form.cleaned_data['category']
+        order = note_filter_form.cleaned_data['order']
+        if category:
+            notes = notes.filter(category__in=category)
+        if order == 'new':
+            notes = notes.order_by('-created_date')
+        if order == 'old':
+            notes = notes.order_by('created_date')
 
     categories = NoteCategory.objects.annotate(total_notes=Count('note'))
 
@@ -27,7 +34,7 @@ def main(request):
             note.save()
             return redirect('addnote_success')
 
-    return render(request, 'main.html', {'notes': notes, 'categories': categories, 'form': form, 'active_category': active_category, 'notes_count': notes_count,})
+    return render(request, 'main.html', {'notes': notes, 'categories': categories, 'form': form, 'active_category': active_category, 'notes_count': notes_count, 'note_filter_form': note_filter_form})
 
 def note_detail(request, note_id):
     note = Note.objects.get(id=note_id)
