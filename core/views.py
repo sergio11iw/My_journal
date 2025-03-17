@@ -4,6 +4,7 @@ from .models import Note, NoteCategory
 from .forms import NoteAddForm, NoteAddModelForm, NoteFilterForm
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.views.generic import TemplateView
 
 @login_required
 def main(request):
@@ -40,8 +41,11 @@ def note_detail(request, note_id):
     note = Note.objects.get(id=note_id)
     return render(request, 'note_detail.html', {'note': note})
 
+
 def addnote_success(request):
     return render(request, 'addnote_success.html')
+class AddNoteSuccessView(TemplateView):
+    template_name = 'addnote_success.html'
 
 @login_required
 def note_edit(request, note_id):
